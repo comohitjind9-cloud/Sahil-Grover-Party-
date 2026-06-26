@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahil Grover and Party</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0D0D0D;--card:#1A1A1A;--card2:#242424;--yellow:#FFD93D;--pink:#FF6B9D;--blue:#4ECDC4;--purple:#A855F7;--orange:#FF9F43;--green:#26de81;--text:#F0F0F0;--muted:#888;--radius:16px}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden}
+.hero{background:linear-gradient(135deg,#1a0533,#0d1f3c,#0d1a0d);padding:40px 20px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,107,157,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(78,205,196,0.12) 0%,transparent 60%);pointer-events:none}
+.confetti-row{font-size:22px;letter-spacing:6px;margin-bottom:14px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hero-title{font-size:clamp(28px,8vw,52px);font-weight:900;line-height:1.1;background:linear-gradient(90deg,#FFD93D,#FF6B9D,#4ECDC4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero-sub{font-size:15px;color:var(--muted);margin-bottom:24px}
+.member-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:8px}
+.chip{padding:5px 14px;border-radius:30px;font-size:13px;font-weight:700;border:2px solid}
+.nav{display:flex;gap:10px;padding:16px;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:50;background:rgba(13,13,13,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #222}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:10px 22px;border-radius:30px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid transparent;background:var(--card2);color:var(--muted);font-family:'Nunito',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.nav-btn:hover{color:var(--text);background:#2a2a2a}
+.section{display:none;padding:20px 16px;max-width:600px;margin:0 auto}
+.section.active{display:block}
+.section-header{text-align:center;margin-bottom:24px}
+.section-header .icon{font-size:48px;margin-bottom:8px}
+.section-header h2{font-size:26px;font-weight:900}
+.section-header p{font-size:14px;color:var(--muted);margin-top:4px}
+.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:14px;border:1px solid #2a2a2a;transition:transform 0.15s}
+.card:hover{transform:translateY(-2px)}
+.joke-card{text-align:center;padding:24px 20px;border-left:4px solid var(--yellow)}
+.joke-setup{font-size:15px;color:var(--muted);margin-bottom:12px}
+.joke-punch{font-size:18px;font-weight:800;color:var(--yellow);line-height:1.4;white-space:pre-line}
+.joke-actions{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.laugh-btn{background:none;border:2px solid var(--yellow);color:var(--yellow);border-radius:30px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all 0.15s}
+.laugh-btn:hover{background:var(--yellow);color:#0d0d0d}
+.new-joke-btn{display:block;width:100%;background:var(--yellow);color:#0D0D0D;border:none;border-radius:var(--radius);padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:opacity 0.15s;margin-top:6px}
+.new-joke-btn:hover{opacity:0.9}
+.fun-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.fun-card{background:var(--card);border-radius:var(--radius);padding:20px 14px;text-align:center;cursor:pointer;border:2px solid #2a2a2a;transition:all 0.18s}
+.fun-card:hover{transform:scale(1.03)}
+.fun-card .fc-icon{font-size:36px;margin-bottom:8px}
+.fun-card .fc-label{font-size:13px;font-weight:800}
+.fun-card .fc-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.fun-result{background:var(--card2);border-radius:var(--radius);padding:18px;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:2px dashed #333;margin-top:4px;line-height:1.6;white-space:pre-line}
+.event-card{border-left:4px solid var(--pink)}
+.event-top{display:flex;align-items:flex-start;gap:14px}
+.event-date-box{background:var(--pink);color:white;border-radius:10px;padding:8px 12px;text-align:center;min-width:52px;flex-shrink:0}
+.event-date-box .eday{font-size:22px;font-weight:900;line-height:1}
+.event-date-box .emon{font-size:11px;font-weight:700;text-transform:uppercase}
+.event-info{flex:1}
+.event-title{font-size:16px;font-weight:800;margin-bottom:4px}
+.event-detail{font-size:13px;color:var(--muted);line-height:1.5}
+.event-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.etag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(255,107,157,0.15);color:var(--pink)}
+.add-event-form{background:var(--card);border-radius:var(--radius);padding:18px;margin-top:16px;border:2px dashed #333}
+.add-event-form h3{font-size:15px;font-weight:800;margin-bottom:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.finput{width:100%;background:var(--card2);border:1.5px solid #333;border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;outline:none}
+.finput:focus{border-color:var(--pink)}
+.finput::placeholder{color:var(--muted)}
+.fadd-btn{width:100%;color:white;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:4px}
+.chat-box{background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid #2a2a2a}
+.chat-msgs{padding:16px;height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+.cmsg{display:flex;gap:8px}
+.cavatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0}
+.cbubble{max-width:70%;padding:8px 12px;border-radius:12px;font-size:13.5px;line-height:1.5;background:var(--card2);border-radius:0 12px 12px 12px}
+.cname{font-size:10px;font-weight:700;margin-bottom:2px}
+.ctime{font-size:10px;color:var(--muted);margin-top:3px}
+.chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid #222;background:var(--card2)}
+.chat-who{background:var(--card);border:1.5px solid #333;border-radius:10px;padding:8px 10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;outline:none;width:110px;flex-shrink:0}
+.chat-inp{flex:1;background:var(--card);border:1.5px solid #333;border-radius:10px;padding:8px 12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;outline:none}
+.chat-inp:focus{border-color:var(--purple)}
+.chat-send{background:var(--purple);color:white;border:none;border-radius:10px;padding:8px 14px;font-size:16px;cursor:pointer}
+.poll-card{border-left:4px solid var(--blue)}
+.poll-q{font-size:16px;font-weight:800;margin-bottom:14px}
+.poll-opt{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer}
+.poll-bar-wrap{flex:1;background:#2a2a2a;border-radius:30px;height:36px;position:relative;overflow:hidden}
+.poll-bar{height:100%;border-radius:30px;background:var(--blue);transition:width 0.4s ease;position:absolute;left:0;top:0}
+.poll-opt-label{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;z-index:1}
+.poll-pct{font-size:13px;font-weight:800;color:var(--blue);min-width:36px;text-align:right}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:#1a1a1a;color:var(--text);padding:12px 22px;border-radius:30px;font-size:14px;font-weight:700;z-index:999;opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);border:1px solid #333;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="confetti-row">🎉 🎊 🥳 🎈 🎉</div>
+  <div class="hero-title">Sahil Grover<br>&amp; Party</div>
+  <div class="hero-sub">Our little corner of the internet 🌍</div>
+  <div class="member-chips">
+    <span class="chip" style="color:#FF6B6B;border-color:#FF6B6B">👑 Virender</span>
+    <span class="chip" style="color:#FFD93D;border-color:#FFD93D">😎 Sahil</span>
+    <span class="chip" style="color:#00A884;border-color:#00A884">💼 Mohit</span>
+    <span class="chip" style="color:#9B59B6;border-color:#9B59B6">🤙 Sudhanshu</span>
+    <span class="chip" style="color:#4ECDC4;border-color:#4ECDC4">🔥 Pardeep</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn" style="background:#FFD93D;color:#0D0D0D" onclick="showSection('jokes',this)">😂 Jokes</button>
+  <button class="nav-btn" onclick="showSection('fun',this)">🎮 Fun</button>
+  <button class="nav-btn" onclick="showSection('events',this)">📅 Events</button>
+  <button class="nav-btn" onclick="showSection('chat',this)">💬 Chat</button>
+  <button class="nav-btn" onclick="showSection('poll',this)">📊 Poll</button>
+</div>
+
+<!-- JOKES -->
+<div class="section active" id="sec-jokes">
+  <div class="section-header"><div class="icon">😂</div><h2>Jokes Corner</h2><p>Pardeep approved jokes only 😜</p></div>
+  <div class="card joke-card">
+    <div class="joke-setup" id="jokeSetup"></div>
+    <div class="joke-punch" id="jokePunch"></div>
+    <div class="joke-actions">
+      <button class="laugh-btn" onclick="reactJoke('😂 Haha!')">😂 Haha!</button>
+      <button class="laugh-btn" onclick="reactJoke('🥱 Boring!')">🥱 Boring</button>
+      <button class="laugh-btn" onclick="reactJoke('💀 Dead!')">💀 Dead</button>
+    </div>
+  </div>
+  <button class="new-joke-btn" onclick="nextJoke()">🎲 Next Joke</button>
+  <div class="card" style="margin-top:16px;border-left:4px solid var(--pink)">
+    <div style="font-size:13px;font-weight:800;color:var(--pink);margin-bottom:10px">➕ Apni Joke Add Karo</div>
+    <input class="finput" id="jokeSetupInput" placeholder="Setup line..." style="margin-bottom:8px">
+    <input class="finput" id="jokePunchInput" placeholder="Punchline 🥁">
+    <button class="fadd-btn" style="background:var(--pink)" onclick="addJoke()">Submit Joke 🎤</button>
+  </div>
+</div>
+
+<!-- FUN -->
+<div class="section" id="sec-fun">
+  <div class="section-header"><div class="icon">🎮</div><h2>Fun Zone</h2><p>Timepass guaranteed 😄</p></div>
+  <div class="fun-grid">
+    <div class="fun-card" style="border-color:#FF6B6B" onclick="spinWheel()"><div class="fc-icon">🎡</div><div class="fc-label" style="color:#FF6B6B">Who Pays?</div><div class="fc-sub">Spin karo!</div></div>
+    <div class="fun-card" style="border-color:#FFD93D" onclick="truthOrDare()"><div class="fc-icon">🎭</div><div class="fc-label" style="color:#FFD93D">Truth/Dare</div><div class="fc-sub">Himmat hai?</div></div>
+    <div class="fun-card" style="border-color:#4ECDC4" onclick="randomActivity()"><div class="fc-icon">🎲</div><div class="fc-label" style="color:#4ECDC4">Random Plan</div><div class="fc-sub">Kya karein?</div></div>
+    <div class="fun-card" style="border-color:#A855F7" onclick="roastMember()"><div class="fc-icon">🔥</div><div class="fc-label" style="color:#A855F7">Roast Karo</div><div class="fc-sub">Friendly roast!</div></div>
+  </div>
+  <div class="fun-result" id="funResult">⬆️ Kuch tap karo!</div>
+</div>
+
+<!-- EVENTS -->
+<div class="section" id="sec-events">
+  <div class="section-header"><div class="icon">📅</div><h2>Events</h2><p>Plans aur memories 🗓️</p></div>
+  <div id="eventsList"></div>
+  <div class="add-event-form">
+    <h3>➕ Naya Event Add Karo</h3>
+    <input class="finput" id="evTitle" placeholder="Event ka naam" style="margin-bottom:10px">
+    <div class="form-row">
+      <input class="finput" id="evDate" type="date">
+      <input class="finput" id="evPlace" placeholder="Jagah 📍">
+    </div>
+    <input class="finput" id="evDesc" placeholder="Details..." style="margin-bottom:10px">
+    <button class="fadd-btn" style="background:var(--pink)" onclick="addEvent()">Add Event 🎉</button>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="section" id="sec-chat">
+  <div class="section-header"><div class="icon">💬</div><h2>Group Chat</h2><p>Sab idhar baat karo 🗣️</p></div>
+  <div class="chat-box">
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-input-row">
+      <select class="chat-who" id="chatWho">
+        <option>Virender</option><option>Sahil</option><option>Mohit</option><option>Sudhanshu</option><option>Pardeep</option>
+      </select>
+      <input class="chat-inp" id="chatInp" placeholder="Message..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- POLL -->
+<div class="section" id="sec-poll">
+  <div class="section-header"><div class="icon">📊</div><h2>Group Poll</h2><p>Vote karo bhai log 🗳️</p></div>
+  <div id="pollContainer"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MEMBERS=[{name:"Virender",color:"#FF6B6B"},{name:"Sahil",color:"#FFD93D"},{name:"Mohit",color:"#00A884"},{name:"Sudhanshu",color:"#9B59B6"},{name:"Pardeep",color:"#4ECDC4"}];
+function getColor(n){return(MEMBERS.find(m=>m.name===n)||{color:'#888'}).color}
+function getInits(n){return n.slice(0,2).toUpperCase()}
+
+const NAV_COLORS={jokes:'#FFD93D',fun:'#FF6B9D',events:'#FF6B9D',chat:'#A855F7',poll:'#4ECDC4'};
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.style.background='';b.style.color=''});
+  btn.style.background=NAV_COLORS[id];btn.style.color='#0D0D0D';
+}
+
+const JOKES=[
+  {setup:"Sahil ne kaha...",punch:"Yaar aaj main gym jaaunga!\n(Aaj bhi nahi gaya 😂)"},
+  {setup:"Teacher: 50 tak gino",punch:"Pardeep: 1, 2, 3... skip... 50! 😎"},
+  {setup:"Mohit: Main diet pe hoon",punch:"5 min baad: Bhai ek aur samosa dena 🍟😂"},
+  {setup:"Sudhanshu ke plans:",punch:"Monday: Padhunga\nTuesday: Padhunga\nSunday: Bhai kal se pakka 😴"},
+  {setup:"Virender: Neend nahi aati",punch:"Virender jab class ho: 💤💤💤"},
+  {setup:"Doctor: Kitna paani peete ho?",punch:"Pardeep: Chai mein toh hota hai na? ☕"},
+  {setup:"Mohit ne budget banaya...",punch:"Savings: Rs.0\nFood: Rs.Infinity 😂💸"},
+  {setup:"Sahil: Main 10 baje uthta hoon",punch:"Sunday Sahil: ZzZzZ... 2 PM 😂"},
+];
+let jokeIdx=0,userJokes=[];
+function showJoke(j){document.getElementById('jokeSetup').textContent=j.setup;document.getElementById('jokePunch').textContent=j.punch}
+function nextJoke(){const all=[...JOKES,...userJokes];jokeIdx=(jokeIdx+1)%all.length;showJoke(all[jokeIdx])}
+function reactJoke(r){showToast(r+' — '+MEMBERS[Math.floor(Math.random()*5)].name)}
+function addJoke(){
+  const s=document.getElementById('jokeSetupInput').value.trim(),p=document.getElementById('jokePunchInput').value.trim();
+  if(!s||!p){showToast('Dono fields bhar!');return}
+  userJokes.push({setup:s,punch:p});
+  document.getElementById('jokeSetupInput').value='';document.getElementById('jokePunchInput').value='';
+  showToast('Joke add ho gayi! 😂');
+}
+
+const WHEEL=['Virender pays! 👑','Sahil pays! 😎','Mohit pays! 💼','Sudhanshu pays! 🤙','Pardeep pays! 🔥'];
+const TRUTHS=['Sabse zyada kise miss kiya? 👀','Pehli crush kaun thi? 😳','Sabse badi jhooth? 🤥','Sabse embarrassing moment? 😬'];
+const DARES=['Agle 1 ghante mein kisi ko call karo 📞','Group mein apni photo bhejo 📸','Voice note bhejo Virender ko 😂','5 pushups karo abhi 💪'];
+const ACTIVITIES=['🍕 Pizza party — Mohit ke ghar!','🎮 Online gaming night — aaj raat!','🎬 Movie night — snacks laao!','☕ Chai pe milte hain — Sunday!','🏏 Cricket — Sunday subah!'];
+const ROASTS=['😂 Sahil itna late aata hai ki uski ETA timezone mein count hoti hai!','🔥 Pardeep ke plans aur Indian trains — dono kabhi time pe nahi aate!','💀 Sudhanshu "5 min mein aata hoon" — woh 5 min 2019 se chal rahe hain!','😭 Mohit budget banata hai — phir khud hi tod deta hai 5 min mein!','👑 Virender itna plan karta hai ki plan ka bhi plan hota hai!'];
+let roastIdx=0;
+function spinWheel(){document.getElementById('funResult').textContent='🎡  '+WHEEL[Math.floor(Math.random()*5)]}
+function truthOrDare(){const t=Math.random()>0.5;const list=t?TRUTHS:DARES;document.getElementById('funResult').innerHTML=(t?'🎭 TRUTH:\n':'💥 DARE:\n')+list[Math.floor(Math.random()*list.length)]}
+function randomActivity(){document.getElementById('funResult').textContent='🎲 Plan: '+ACTIVITIES[Math.floor(Math.random()*ACTIVITIES.length)]}
+function roastMember(){document.getElementById('funResult').textContent=ROASTS[roastIdx++%ROASTS.length]}
+
+let events=[
+  {title:'Goa Trip',day:'15',mon:'Jul',place:'Goa',desc:'Sab aa rahe hain! Budget: Rs.5000/head',tags:['Trip','Beach','Party']},
+  {title:'Pizza Night',day:'28',mon:'Jun',place:"Mohit's Place",desc:'Ghar pe pizza, game aur bakwaas',tags:['Food','Fun']},
+  {title:"Sahil's Birthday",day:'10',mon:'Aug',place:'TBD',desc:'Surprise plan kar rahe hain!',tags:['Birthday','Party']},
+];
+function renderEvents(){
+  document.getElementById('eventsList').innerHTML=events.map(e=>`
+    <div class="card event-card"><div class="event-top">
+      <div class="event-date-box"><div class="eday">${e.day}</div><div class="emon">${e.mon}</div></div>
+      <div class="event-info"><div class="event-title">${e.title}</div><div class="event-detail">📍 ${e.place}<br>${e.desc}</div>
+      <div class="event-tags">${e.tags.map(t=>`<span class="etag">${t}</span>`).join('')}</div></div>
+    </div></div>`).join('');
+}
+function addEvent(){
+  const title=document.getElementById('evTitle').value.trim(),date=document.getElementById('evDate').value,place=document.getElementById('evPlace').value.trim(),desc=document.getElementById('evDesc').value.trim();
+  if(!title||!date){showToast('Naam aur date bhar!');return}
+  const d=new Date(date);
+  events.unshift({title,place:place||'TBD',desc:desc||'Details baad mein!',day:d.getDate(),mon:d.toLocaleString('en',{month:'short'}),tags:['New']});
+  ['evTitle','evDate','evPlace','evDesc'].forEach(id=>document.getElementById(id).value='');
+  renderEvents();showToast('Event add ho gaya! 🎉');
+}
+
+let chatMsgs=[
+  {name:'Virender',text:'Group ready hai yaar! 🎉',time:'10:00'},
+  {name:'Sahil',text:'Ekdum mast bhai! 😎🔥',time:'10:01'},
+  {name:'Pardeep',text:'Finally ek website apni 😂',time:'10:02'},
+  {name:'Mohit',text:'Goa trip ka plan pakka karo! 🏖️',time:'10:03'},
+  {name:'Sudhanshu',text:'Main toh ready hoon 🤙',time:'10:04'},
+];
+function renderChat(){
+  const b=document.getElementById('chatMsgs');
+  b.innerHTML=chatMsgs.map(m=>`<div class="cmsg them"><div class="cavatar" style="background:${getColor(m.name)}">${getInits(m.name)}</div><div><div class="cname" style="color:${getColor(m.name)}">${m.name}</div><div class="cbubble">${m.text}</div><div class="ctime">${m.time}</div></div></div>`).join('');
+  b.scrollTop=b.scrollHeight;
+}
+function sendChat(){
+  const who=document.getElementById('chatWho').value,text=document.getElementById('chatInp').value.trim();
+  if(!text)return;
+  const now=new Date(),time=now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'});
+  chatMsgs.push({name:who,text,time});
+  document.getElementById('chatInp').value='';renderChat();
+}
+
+const polls=[
+  {q:'Goa trip — kab jaayein?',opts:[{label:'July',votes:3},{label:'August',votes:1},{label:'September',votes:1}]},
+  {q:'Weekend plan kya ho?',opts:[{label:'Pizza Night',votes:2},{label:'Gaming',votes:3},{label:'Cricket',votes:2},{label:'Movie',votes:1}]},
+];
+function renderPolls(){
+  document.getElementById('pollContainer').innerHTML=polls.map((p,pi)=>{
+    const total=p.opts.reduce((s,o)=>s+o.votes,0);
+    return `<div class="card poll-card"><div class="poll-q">${p.q}</div>${p.opts.map((o,oi)=>{const pct=total?Math.round(o.votes/total*100):0;return`<div class="poll-opt" onclick="vote(${pi},${oi})"><div class="poll-bar-wrap"><div class="poll-bar" style="width:${pct}%"></div><span class="poll-opt-label">${o.label}</span></div><span class="poll-pct">${pct}%</span></div>`}).join('')}<div style="font-size:12px;color:var(--muted);margin-top:6px">${total} votes</div></div>`;
+  }).join('');
+}
+function vote(pi,oi){polls[pi].opts[oi].votes++;renderPolls();showToast('Vote recorded!')}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+
+showJoke(JOKES[0]);renderEvents();renderChat();renderPolls();
+</script>
+</body>
+</html>
